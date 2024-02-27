@@ -1,7 +1,6 @@
 var indexRouter = require("./routes/index");
 var catalogueRouter = require("./routes/catalogue");
 var cors = require("cors");
-
 const express = require("express");
 const app = express();
 const port = 3001;
