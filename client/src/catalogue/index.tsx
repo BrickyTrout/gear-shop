@@ -10,20 +10,19 @@ function Catalogue() {
   useEffect(() => {
     getCatalogue();
   }, []);
-
   switch (catalogueState) {
     case ApiState.Error:
-      return <div className="catalogue">Error: {catalogueError}</div>;
+      return (<div className="catalogue">Error: {catalogueError}</div>);
     case ApiState.Complete:
       return (
         <div className="catalogue">
           {catalogueData?.map(({ id, name }) => {
-            return <CatalogueItem id={id} name={name}></CatalogueItem>;
+            return <CatalogueItem key={id} id={id} name={name}></CatalogueItem>;
           })}
         </div>
       );
     default:
-      return <div className="catalogue">Loading</div>;
+      return (<div className="catalogue">Loading</div>);
   }
 }
 

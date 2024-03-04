@@ -14,7 +14,6 @@ const CatalogueService = () => {
 
   useEffect(() => {
     setCatalogueState(ApiState.Loading);
-    console.log(getData);
     if (getData?.length <= 0) {
       setCatalogueError("empty catalogue");
       setCatalogueState(ApiState.Error);

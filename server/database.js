@@ -2,7 +2,6 @@ const { MongoClient } = require("mongodb");
 
 const getDB = async () => {
   const connectionString = process.env.DB_URI || "";
-  console.log(connectionString);
   const client = new MongoClient(connectionString);
   let conn;
   try {
@@ -10,7 +9,7 @@ const getDB = async () => {
   } catch (e) {
     console.error(e);
   }
-  return conn.db("gear-store");
+  return conn.db("gear_store");
 };
 
 module.exports = getDB;
