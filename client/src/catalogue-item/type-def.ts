@@ -1,4 +1,9 @@
 export interface CatalogueItemType {
-  id: number;
+  _id: number;
   name: string;
+  category: string;
+  price: number;
+  quantity: number;
+  img: string;
+  manufacturer: string
 }

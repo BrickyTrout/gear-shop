@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import CatalogueItem from "../catalogue-item";
 import CatalogueService from "./catalogue-service";
 import { ApiState } from "../common/types/state.def";
+import CatalogueFilter from "../catalogue-filter";
+import CatalogueFilteredDisplay from "../catalogue-filtered-display";
 
 function Catalogue() {
   const { getCatalogue, catalogueData, catalogueError, catalogueState } =
@@ -12,17 +14,17 @@ function Catalogue() {
   }, []);
   switch (catalogueState) {
     case ApiState.Error:
-      return (<div className="catalogue">Error: {catalogueError}</div>);
+      return <div className="catalogue">Error: {catalogueError}</div>;
     case ApiState.Complete:
       return (
         <div className="catalogue">
-          {catalogueData?.map(({ id, name }) => {
-            return <CatalogueItem key={id} id={id} name={name}></CatalogueItem>;
-          })}
+          <CatalogueFilteredDisplay
+            unfilteredArray={catalogueData}
+          ></CatalogueFilteredDisplay>
         </div>
       );
     default:
-      return (<div className="catalogue">Loading</div>);
+      return <div className="catalogue">Loading</div>;
   }
 }
 

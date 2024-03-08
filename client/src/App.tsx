@@ -9,7 +9,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <FontAwesomeIcon icon={faMountain}></FontAwesomeIcon>
-        <h3>Ipsum Lorem Outdoor Store</h3>
+        <h3>Gear</h3>
+        <h3 className="title-light">haus</h3>
       </header>
       <div className="App-body">
         <Catalogue></Catalogue>

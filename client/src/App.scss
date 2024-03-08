@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "./common/scss/variables.scss";
-@import "./catalogue/catalogue.scss";
-@import "./catalogue-item/catalogue-item.scss";
+@import "./common/scss/mixin.scss";
+
 html,
 body,
 #root {
@@ -11,6 +12,7 @@ body,
   font-family: "Montserrat", sans-serif;
   background-color: $brand-primary;
   height: 100%;
+  overflow: auto;
   &-header {
     display: flex;
     align-items: center;
@@ -24,9 +26,19 @@ body,
     h3 {
       margin-left: 0.5rem;
     }
+
+    .title-light {
+      margin-left: 0;
+      font-weight: 200;
+    }
   }
 
   &-body {
     margin: 0 20px;
   }
 }
+
+@import "./catalogue/catalogue.scss";
+@import "./catalogue-item/catalogue-item.scss";
+@import "./catalogue-filtered-display/catalogue-filtered-display.scss";
+@import "./catalogue-filter/catalogue-filter.scss";

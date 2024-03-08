@@ -5,10 +5,7 @@ import { ApiState } from "../common/types/state.def";
 
 const CatalogueService = () => {
   const { get, getData, getError } = FetchService();
-  const [catalogueData, setCatalogueData] = useState() as [
-    CatalogueItemType[],
-    React.Dispatch<React.SetStateAction<CatalogueItemType[]>>
-  ];
+  const [catalogueData, setCatalogueData] = useState([] as CatalogueItemType[]);
   const [catalogueError, setCatalogueError] = useState("");
   const [catalogueState, setCatalogueState] = useState(ApiState.Unknown);
 

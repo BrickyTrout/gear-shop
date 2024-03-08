@@ -1,0 +1,23 @@
+.catalogue-filter {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  &__category {
+    background-color: $white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+
+  &__category-label {
+    text-transform: capitalize;
+    margin-bottom: 0.5rem;
+  }
+
+  &__facet {
+    color: $shade-400;
+  }
+
+  @include respond-up($laptop) {
+    flex-direction: column;
+  }
+}

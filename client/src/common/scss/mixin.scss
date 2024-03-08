@@ -1,0 +1,12 @@
+@mixin respond-up($size) {
+  @media (min-width: $size) {
+    @content;
+  }
+}
+
+@mixin on-interact {
+  &:hover,
+  &:active {
+    @content;
+  }
+}

@@ -12,7 +12,6 @@ const FetchService = () => {
         method: "GET",
       });
       const data = await res.json();
-      console.log(data);
       setGetData(data);
     } catch (err) {
       setGetError(err as string);
