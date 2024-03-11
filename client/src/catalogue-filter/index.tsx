@@ -6,8 +6,6 @@ function CatalogueFilter(props: {
 }) {
   const { catalogueFilterArray, onFilterClick } = props;
 
-  console.log("catalogueFilterArray", catalogueFilterArray);
-
   const renderFacetElement = (
     category: string,
     option: { label: string; state: boolean }

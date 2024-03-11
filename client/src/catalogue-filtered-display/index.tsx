@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CatalogueItem from "../catalogue-item";
 import { CatalogueItemType } from "../catalogue-item/type-def";
 import CatalogueFilter from "../catalogue-filter";
@@ -12,34 +12,37 @@ import {
 function CatalogueFilteredDisplay(props: {
   unfilteredArray: CatalogueItemType[];
 }) {
-  const { unfilteredArray } = props;
   const categories = ["category", "manufacturer"];
-  const initialFilterObject =
-    extractFilterObjectFromCatalogueItemsAndCategories(
-      unfilteredArray,
-      categories
-    );
+  const { unfilteredArray } = props;
+  const filterObject = extractFilterObjectFromCatalogueItemsAndCategories(
+    unfilteredArray,
+    categories
+  );
   const [catalogueFilterObject, setCatalogueFilterObject] =
-    useState(initialFilterObject);
-
-  let filteredCatalogueItemJSX;
-
+    useState(filterObject);
   const filteredCatalogueItems = filterCalogueItems(
     unfilteredArray,
     catalogueFilterObject
   );
+  const filteredCatalogueItemJSX = filteredCatalogueItems?.map(
+    (filteredItem) => {
+      return (
+        <CatalogueItem
+          key={filteredItem._id}
+          data={filteredItem}
+        ></CatalogueItem>
+      );
+    }
+  );
 
-  filteredCatalogueItemJSX = filteredCatalogueItems?.map((filteredItem) => {
-    return (
-      <CatalogueItem key={filteredItem._id} data={filteredItem}></CatalogueItem>
-    );
-  });
-  // console.log("filteredCatalogueItems", filteredCatalogueItems);
-  // console.log("filteredCatalogueItemJSX", filteredCatalogueItemJSX);
-
-  const onFilterClick = (filter: string, category: string) => {
+  const onFilterClick = (category: string, filter: string) => {
     setCatalogueFilterObject((filterObject) => {
-      return toggleFilterStateOnClick(filterObject, filter, category);
+      const newFilterObject = toggleFilterStateOnClick(
+        filterObject,
+        category,
+        filter
+      );
+      return newFilterObject;
     });
   };
 

@@ -6,26 +6,27 @@ import CatalogueFilter from "../catalogue-filter";
 import CatalogueFilteredDisplay from "../catalogue-filtered-display";
 
 function Catalogue() {
-  const { getCatalogue, catalogueData, catalogueError, catalogueState } =
-    CatalogueService();
-
-  useEffect(() => {
-    getCatalogue();
-  }, []);
-  switch (catalogueState) {
-    case ApiState.Error:
-      return <div className="catalogue">Error: {catalogueError}</div>;
-    case ApiState.Complete:
-      return (
-        <div className="catalogue">
-          <CatalogueFilteredDisplay
-            unfilteredArray={catalogueData}
-          ></CatalogueFilteredDisplay>
-        </div>
-      );
-    default:
-      return <div className="catalogue">Loading</div>;
+  const { catalogueData, catalogueError, catalogueState } = CatalogueService();
+  if (catalogueState === ApiState.Loading) {
+    return <div className="catalogue">Loading</div>;
   }
+
+  if (catalogueState === ApiState.Error) {
+    return <div className="catalogue">Error: {catalogueError}</div>;
+  }
+
+  if (catalogueState === ApiState.Complete) {
+    return (
+      <div className="catalogue">
+        <CatalogueFilteredDisplay
+          key={catalogueData?.key}
+          unfilteredArray={catalogueData?.data}
+        ></CatalogueFilteredDisplay>
+      </div>
+    );
+  }
+
+  return <div className="catalogue">Error: unknown state!</div>;
 }
 
 export default Catalogue;

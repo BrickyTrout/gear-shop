@@ -5,9 +5,12 @@ import { ApiState } from "../common/types/state.def";
 
 const CatalogueService = () => {
   const { get, getData, getError } = FetchService();
-  const [catalogueData, setCatalogueData] = useState([] as CatalogueItemType[]);
+  const [catalogueData, setCatalogueData] = useState({
+    data: [] as CatalogueItemType[],
+    key: 0,
+  });
   const [catalogueError, setCatalogueError] = useState("");
-  const [catalogueState, setCatalogueState] = useState(ApiState.Unknown);
+  const [catalogueState, setCatalogueState] = useState(ApiState.Loading);
 
   useEffect(() => {
     setCatalogueState(ApiState.Loading);
@@ -22,15 +25,17 @@ const CatalogueService = () => {
       setCatalogueState(ApiState.Error);
       return;
     }
-    setCatalogueData(getData);
+
+    const dataKey = new Date().valueOf();
+    setCatalogueData({ data: getData, key: dataKey });
     setCatalogueState(ApiState.Complete);
   }, [getData, getError]);
 
-  const getCatalogue = async () => {
-    await get("catalogue");
-  };
+  useEffect(() => {
+    get("catalogue");
+  }, []);
 
-  return { getCatalogue, catalogueData, catalogueError, catalogueState };
+  return { catalogueData, catalogueError, catalogueState };
 };
 
 export default CatalogueService;
