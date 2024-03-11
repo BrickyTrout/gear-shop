@@ -1,8 +1,5 @@
-import { useEffect } from "react";
-import CatalogueItem from "../catalogue-item";
 import CatalogueService from "./catalogue-service";
 import { ApiState } from "../common/types/state.def";
-import CatalogueFilter from "../catalogue-filter";
 import CatalogueFilteredDisplay from "../catalogue-filtered-display";
 
 function Catalogue() {
@@ -19,8 +16,7 @@ function Catalogue() {
     return (
       <div className="catalogue">
         <CatalogueFilteredDisplay
-          key={catalogueData?.key}
-          unfilteredArray={catalogueData?.data}
+          unfilteredArray={catalogueData}
         ></CatalogueFilteredDisplay>
       </div>
     );
