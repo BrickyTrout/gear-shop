@@ -1,6 +1,5 @@
 .catalogue-filtered-display {
   display: flex;
-  flex-direction: column;
   gap: 1rem;
 
   &__catalogue {
@@ -11,9 +10,5 @@
 
     .catalogue-item {
     }
-  }
-
-  @include respond-up($laptop) {
-    flex-direction: row;
   }
 }

@@ -1,0 +1,9 @@
+.catalogue {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+
+  @include respond-up($laptop) {
+    flex-direction: row;
+  }
+}

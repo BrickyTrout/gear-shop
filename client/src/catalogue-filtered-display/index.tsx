@@ -1,66 +1,32 @@
-import { useEffect, useState } from "react";
 import CatalogueItem from "../catalogue-item";
 import { CatalogueItemType } from "../catalogue-item/type-def";
-import CatalogueFilter from "../catalogue-filter";
-import {
-  convertCatalogueFilterObjectToArray,
-  extractFilterObjectFromCatalogueItemsAndCategories,
-  filterCalogueItems,
-  toggleFilterStateOnClick,
-} from "./catalogue-filtered-display-service";
+import { filterCalogueItems } from "./catalogue-filtered-display-service";
+import { CatalogueFilterObject } from "../catalogue-filter/type-def";
 
 function CatalogueFilteredDisplay(props: {
   unfilteredArray: CatalogueItemType[];
+  filterObject: CatalogueFilterObject;
 }) {
-  const categories = ["category", "manufacturer"];
-  const { unfilteredArray } = props;
-  const filterObject = extractFilterObjectFromCatalogueItemsAndCategories(
-    unfilteredArray,
-    categories
-  );
-  const [catalogueFilterObject, setCatalogueFilterObject] =
-    useState(filterObject);
+  const { unfilteredArray, filterObject } = props;
   const filteredCatalogueItems = filterCalogueItems(
     unfilteredArray,
-    catalogueFilterObject
+    filterObject
   );
-  const filteredCatalogueItemJSX = filteredCatalogueItems?.map(
-    (filteredItem) => {
-      return (
-        <CatalogueItem
-          key={filteredItem._id}
-          data={filteredItem}
-        ></CatalogueItem>
-      );
-    }
-  );
-
-  const onFilterClick = (category: string, filter: string) => {
-    setCatalogueFilterObject((filterObject) => {
-      const newFilterObject = toggleFilterStateOnClick(
-        filterObject,
-        category,
-        filter
-      );
-      return newFilterObject;
-    });
-  };
-
-  const catalogueFilterArray = convertCatalogueFilterObjectToArray(
-    catalogueFilterObject
+  const filteredCatalogueItemJSX = filteredCatalogueItems?.map((filteredItem) =>
+    renderCatalogueItems(filteredItem)
   );
 
   return (
     <div className="catalogue-filtered-display">
-      <CatalogueFilter
-        onFilterClick={onFilterClick}
-        catalogueFilterArray={catalogueFilterArray}
-      ></CatalogueFilter>
       <div className="catalogue-filtered-display__catalogue">
         {filteredCatalogueItemJSX}
       </div>
     </div>
   );
+}
+
+function renderCatalogueItems(item: CatalogueItemType) {
+  return <CatalogueItem key={item._id} data={item}></CatalogueItem>;
 }
 
 export default CatalogueFilteredDisplay;

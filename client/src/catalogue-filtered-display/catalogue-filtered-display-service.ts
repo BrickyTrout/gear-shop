@@ -1,14 +1,18 @@
+import { useEffect, useState } from "react";
 import {
   CatalogueFilterArray,
   CatalogueFilterObject,
 } from "../catalogue-filter/type-def";
 import { CatalogueItemType } from "../catalogue-item/type-def";
+import FetchService from "../common/hooks/fetch";
+import { ApiState } from "../common/types/state.def";
 
 export function extractFilterObjectFromCatalogueItemsAndCategories(
   items: CatalogueItemType[],
   categories: string[]
 ) {
-  if (items == null || categories?.length === 0) return {};
+  if (items == null || categories == null || categories?.length === 0)
+    return {};
   const onlyUnique = (value: string, index: number, array: Array<string>) => {
     return array.indexOf(value) === index;
   };
@@ -71,6 +75,7 @@ export function toggleFilterStateOnClick(
   toggledFilterCategory: string,
   toggledFilter: string
 ) {
+  console.log("filterObject", filterObject);
   console.log(
     "filterObject[toggledFilterCategory]",
     filterObject[toggledFilterCategory]
@@ -92,3 +97,42 @@ export function areAllFiltersUnchecked(filterObject: CatalogueFilterObject) {
   }
   return true;
 }
+
+const CatalogueCategoryService = () => {
+  const { get, getData, getError } = FetchService();
+  const [categoryData, setFilterData] = useState([] as string[]);
+  const [categoryError, setCategoryError] = useState("");
+  const [categoryState, setCategoryState] = useState(ApiState.Loading);
+
+  useEffect(() => {
+    setCategoryState(ApiState.Loading);
+    if (getData?.length <= 0) {
+      setCategoryError("No filter category fetched");
+      setCategoryState(ApiState.Error);
+      console.error("No filter category fetched");
+      return;
+    }
+    if (getError) {
+      setCategoryError(getError);
+      setCategoryState(ApiState.Error);
+      return;
+    }
+    if (
+      getData == null ||
+      getData?.length === 0 ||
+      getData?.[0]?.filters == null
+    ) {
+      return;
+    }
+    setFilterData([...getData?.[0]?.filters]);
+    setCategoryState(ApiState.Complete);
+  }, [getData, getError]);
+
+  useEffect(() => {
+    get("catalogue-filters");
+  }, []);
+
+  return { categoryData, categoryError, categoryState };
+};
+
+export default CatalogueCategoryService;

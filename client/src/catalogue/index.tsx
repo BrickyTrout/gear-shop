@@ -1,28 +1,21 @@
+import CatalogueDisplay from "../catalogue-display";
+import CatalogueCategoryService from "../catalogue-filtered-display/catalogue-filtered-display-service";
 import CatalogueService from "./catalogue-service";
-import { ApiState } from "../common/types/state.def";
-import CatalogueFilteredDisplay from "../catalogue-filtered-display";
 
 function Catalogue() {
   const { catalogueData, catalogueError, catalogueState } = CatalogueService();
-  if (catalogueState === ApiState.Loading) {
-    return <div className="catalogue">Loading</div>;
-  }
-
-  if (catalogueState === ApiState.Error) {
-    return <div className="catalogue">Error: {catalogueError}</div>;
-  }
-
-  if (catalogueState === ApiState.Complete) {
-    return (
-      <div className="catalogue">
-        <CatalogueFilteredDisplay
-          unfilteredArray={catalogueData}
-        ></CatalogueFilteredDisplay>
-      </div>
-    );
-  }
-
-  return <div className="catalogue">Error: unknown state!</div>;
+  const { categoryData, categoryError, categoryState } =
+    CatalogueCategoryService();
+  return (
+    <CatalogueDisplay
+      catalogueData={catalogueData}
+      catalogueError={catalogueError}
+      catalogueState={catalogueState}
+      categoryData={categoryData}
+      categoryError={categoryError}
+      categoryState={categoryState}
+    ></CatalogueDisplay>
+  );
 }
 
 export default Catalogue;
