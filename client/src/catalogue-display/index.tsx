@@ -9,6 +9,7 @@ import {
 import CatalogueFilter from "../catalogue-filter";
 import React, { useEffect, useState } from "react";
 import { CatalogueFilterObject } from "../catalogue-filter/type-def";
+import CatalogueSearch from "../catalogue-search";
 
 function CatalogueDisplay(props: {
   catalogueData: CatalogueItemType[];
@@ -17,6 +18,8 @@ function CatalogueDisplay(props: {
   categoryData: string[];
   categoryError: string;
   categoryState: ApiState;
+  searchQueryState: string;
+  changeSearchQuery: (value: string) => void;
 }) {
   const {
     catalogueData,
@@ -25,6 +28,8 @@ function CatalogueDisplay(props: {
     categoryData,
     categoryError,
     categoryState,
+    searchQueryState,
+    changeSearchQuery,
   } = props;
 
   const [catalogueFilterObject, setCatalogueFilterObject] = useState({}) as [
@@ -49,6 +54,9 @@ function CatalogueDisplay(props: {
       return newFilterObject;
     });
   };
+
+  const searchBarJsx = renderSearchBar(searchQueryState, changeSearchQuery);
+
   const filteredCatalogueJsx = renderFilteredCatalogue(
     catalogueData,
     catalogueError,
@@ -65,8 +73,11 @@ function CatalogueDisplay(props: {
 
   return (
     <div className="catalogue">
-      {catalogueFilterJsx}
-      {filteredCatalogueJsx}
+      {searchBarJsx}
+      <div className="catalogue__filter-catalogue-container">
+        {catalogueFilterJsx}
+        {filteredCatalogueJsx}
+      </div>
     </div>
   );
 }
@@ -124,6 +135,18 @@ function renderCatalogueFilter(
   }
 
   return <div className="catalogue">Error: unknown state!</div>;
+}
+
+function renderSearchBar(
+  searchQuery: string,
+  searchBarOnChange: (value: string) => void
+) {
+  return (
+    <CatalogueSearch
+      searchQuery={searchQuery}
+      searchUpdated={searchBarOnChange}
+    ></CatalogueSearch>
+  );
 }
 
 export default CatalogueDisplay;

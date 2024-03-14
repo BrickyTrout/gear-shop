@@ -3,7 +3,13 @@ import CatalogueCategoryService from "../catalogue-filtered-display/catalogue-fi
 import CatalogueService from "./catalogue-service";
 
 function Catalogue() {
-  const { catalogueData, catalogueError, catalogueState } = CatalogueService();
+  const {
+    catalogueData,
+    catalogueError,
+    catalogueState,
+    searchQueryState,
+    changeSearchQuery,
+  } = CatalogueService();
   const { categoryData, categoryError, categoryState } =
     CatalogueCategoryService();
   return (
@@ -14,6 +20,8 @@ function Catalogue() {
       categoryData={categoryData}
       categoryError={categoryError}
       categoryState={categoryState}
+      searchQueryState={searchQueryState}
+      changeSearchQuery={changeSearchQuery}
     ></CatalogueDisplay>
   );
 }

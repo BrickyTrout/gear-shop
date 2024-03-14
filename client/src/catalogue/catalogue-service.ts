@@ -8,6 +8,7 @@ const CatalogueService = () => {
   const [catalogueData, setCatalogueData] = useState([] as CatalogueItemType[]);
   const [catalogueError, setCatalogueError] = useState("");
   const [catalogueState, setCatalogueState] = useState(ApiState.Loading);
+  const [searchQueryState, setSearchQueryState] = useState("");
 
   useEffect(() => {
     setCatalogueState(ApiState.Loading);
@@ -29,10 +30,20 @@ const CatalogueService = () => {
   }, [getData, getError]);
 
   useEffect(() => {
-    get("catalogue");
-  }, []);
+    get(`catalogue?q=${searchQueryState}`);
+  }, [searchQueryState]);
 
-  return { catalogueData, catalogueError, catalogueState };
+  const changeSearchQuery = (query: string) => {
+    setSearchQueryState(query);
+  };
+
+  return {
+    catalogueData,
+    catalogueError,
+    catalogueState,
+    searchQueryState,
+    changeSearchQuery,
+  };
 };
 
 export default CatalogueService;

@@ -3,7 +3,12 @@
   gap: 2rem;
   flex-direction: column;
 
-  @include respond-up($laptop) {
-    flex-direction: row;
+  &__filter-catalogue-container {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    @include respond-up($laptop) {
+      flex-direction: row;
+    }
   }
 }
