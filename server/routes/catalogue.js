@@ -15,14 +15,29 @@ router.get("/", async function (req, res) {
   let collection = conn.db("gear_store").collection("catalogue");
   const query = req.query.q;
   const regex = new RegExp(`${query}`, "i");
+  let page = parseInt(req.query.page, 10) || 1;
+  let pageSize = parseInt(req.query.pageSize, 10) || 50;
+  const pipeline = [
+    {
+      $match: {
+        name: { $regex: regex },
+      },
+    },
+    {
+      $facet: {
+        metadata: [{ $count: "totalCount" }],
+        data: [{ $skip: (page - 1) * pageSize }, { $limit: pageSize }],
+      },
+    },
+  ];
   try {
-    let results = await collection.find({ name: regex }).limit(50).toArray();
+    let results = await collection.aggregate(pipeline).toArray();
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept"
     );
-    res.send(results).status(200);
+    res.send(results[0]).status(200);
   } catch (err) {
     res.status(500).send(err);
   }
