@@ -13,6 +13,7 @@ import CatalogueSearch from "../catalogue-search";
 import { CatalogueType } from "../catalogue/catalogue-api-type.def";
 import { CatalogueQueryParams } from "../catalogue/catalogue-query-params.def";
 import CataloguePagination from "../catalogue-pagination";
+import CatalogueToolbar from "../catalogue-toolbar";
 
 function CatalogueDisplay(props: {
   catalogueData: CatalogueType;
@@ -63,9 +64,11 @@ function CatalogueDisplay(props: {
     });
   };
 
-  const searchBarJsx = renderSearchBar(
+  const searchBarJsx = renderToolbar(
     queryParamState.search,
-    changeSearchQuery
+    queryParamState.pageIndex,
+    changeSearchQuery,
+    changePageSize
   );
 
   const filteredCatalogueJsx = renderFilteredCatalogue(
@@ -156,15 +159,19 @@ function renderCatalogueFilter(
   return <div className="catalogue">Error: unknown state!</div>;
 }
 
-function renderSearchBar(
+function renderToolbar(
   searchQuery: string,
-  searchBarOnChange: (value: string) => void
+  pageSize: number,
+  searchBarOnChange: (value: string) => void,
+  pageSizeOnChange: (size: number)=> void
 ) {
   return (
-    <CatalogueSearch
+    <CatalogueToolbar
       searchQuery={searchQuery}
+      pageSize={pageSize}
       searchUpdated={searchBarOnChange}
-    ></CatalogueSearch>
+      pageSizeUpdated={pageSizeOnChange}
+    ></CatalogueToolbar>
   );
 }
 
