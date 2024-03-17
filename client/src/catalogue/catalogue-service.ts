@@ -37,8 +37,9 @@ const CatalogueService = () => {
   }, [getData, getError]);
 
   useEffect(() => {
-    get(`catalogue?q=${searchQueryState}`);
-  }, [searchQueryState]);
+    const {search, pageIndex, pageSize} = queryParamsState;
+    get(`catalogue?q=${search}&i=${pageIndex}&s=${pageSize}`);
+  }, [queryParamsState]);
 
   const changeSearchQuery = (query: string) => {
     setSearchQueryState(query);
@@ -46,14 +47,24 @@ const CatalogueService = () => {
       return {...params, search: query}
     })
   };
-
+  const changePageSize = (newPageSize: number) => {
+    setQueryParamsState((params) => {
+      return {...params, pageSize: newPageSize}
+    })
+  };
+  const changePageIndex = (newPageIndex: number) => {
+    setQueryParamsState((params) => {
+      return {...params, pageIndex: newPageIndex}
+    })
+  };
   return {
     catalogueData,
     catalogueError,
     catalogueState,
     queryParamsState,
-    searchQueryState,
     changeSearchQuery,
+    changePageIndex,
+    changePageSize
   };
 };
 

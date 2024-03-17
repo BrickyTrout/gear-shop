@@ -11,6 +11,8 @@ import React, { useEffect, useState } from "react";
 import { CatalogueFilterObject } from "../catalogue-filter/type-def";
 import CatalogueSearch from "../catalogue-search";
 import { CatalogueType } from "../catalogue/catalogue-api-type.def";
+import { CatalogueQueryParams } from "../catalogue/catalogue-query-params.def";
+import CataloguePagination from "../catalogue-pagination";
 
 function CatalogueDisplay(props: {
   catalogueData: CatalogueType;
@@ -19,8 +21,10 @@ function CatalogueDisplay(props: {
   categoryData: string[];
   categoryError: string;
   categoryState: ApiState;
-  searchQueryState: string;
-  changeSearchQuery: (value: string) => void;
+  queryParamState: CatalogueQueryParams;
+  changeSearchQuery: (query: string) => void;
+  changePageIndex: (index: number) => void;
+  changePageSize: (size: number) => void;
 }) {
   const {
     catalogueData,
@@ -29,8 +33,10 @@ function CatalogueDisplay(props: {
     categoryData,
     categoryError,
     categoryState,
-    searchQueryState,
+    queryParamState,
     changeSearchQuery,
+    changePageIndex,
+    changePageSize,
   } = props;
 
   const [catalogueFilterObject, setCatalogueFilterObject] = useState({}) as [
@@ -57,7 +63,10 @@ function CatalogueDisplay(props: {
     });
   };
 
-  const searchBarJsx = renderSearchBar(searchQueryState, changeSearchQuery);
+  const searchBarJsx = renderSearchBar(
+    queryParamState.search,
+    changeSearchQuery
+  );
 
   const filteredCatalogueJsx = renderFilteredCatalogue(
     catalogueData.data,
@@ -73,6 +82,13 @@ function CatalogueDisplay(props: {
     onFilterClick
   );
 
+  const cataloguePaginationJsx = renderPagination(
+    queryParamState.pageSize,
+    queryParamState.pageIndex,
+    catalogueData.metadata.totalCount,
+    changePageIndex
+  );
+
   return (
     <div className="catalogue">
       {searchBarJsx}
@@ -80,6 +96,7 @@ function CatalogueDisplay(props: {
         {catalogueFilterJsx}
         {filteredCatalogueJsx}
       </div>
+      {cataloguePaginationJsx}
     </div>
   );
 }
@@ -148,6 +165,22 @@ function renderSearchBar(
       searchQuery={searchQuery}
       searchUpdated={searchBarOnChange}
     ></CatalogueSearch>
+  );
+}
+
+function renderPagination(
+  pageSize: number,
+  pageIndex: number,
+  totalCount: number,
+  setPageIndex: (index: number) => void
+) {
+  return (
+    <CataloguePagination
+      pageSize={pageSize}
+      pageIndex={pageIndex}
+      totalCount={totalCount}
+      setPageIndex={setPageIndex}
+    ></CataloguePagination>
   );
 }
 

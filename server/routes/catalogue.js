@@ -13,10 +13,10 @@ router.get("/", async function (req, res) {
   }
 
   let collection = conn.db("gear_store").collection("catalogue");
-  const query = req.query.q;
-  const regex = new RegExp(`${query}`, "i");
-  let page = parseInt(req.query.page, 10) || 1;
-  let pageSize = parseInt(req.query.pageSize, 10) || 50;
+  const {q, i, s} = req.query;
+  const regex = new RegExp(`${q}`, "i");
+  let page = parseInt(i, 10) || 1;
+  let pageSize = parseInt(s, 10) || 50;
   const pipeline = [
     {
       $match: {
