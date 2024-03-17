@@ -10,9 +10,10 @@ import CatalogueFilter from "../catalogue-filter";
 import React, { useEffect, useState } from "react";
 import { CatalogueFilterObject } from "../catalogue-filter/type-def";
 import CatalogueSearch from "../catalogue-search";
+import { CatalogueType } from "../catalogue/catalogue-api-type.def";
 
 function CatalogueDisplay(props: {
-  catalogueData: CatalogueItemType[];
+  catalogueData: CatalogueType;
   catalogueError: string;
   catalogueState: ApiState;
   categoryData: string[];
@@ -37,8 +38,9 @@ function CatalogueDisplay(props: {
     React.Dispatch<React.SetStateAction<CatalogueFilterObject>>
   ];
   useEffect(() => {
+    const catalogueItemList = catalogueData.data;
     const filterObject = extractFilterObjectFromCatalogueItemsAndCategories(
-      catalogueData,
+      catalogueItemList,
       categoryData
     );
     setCatalogueFilterObject(filterObject);
@@ -58,7 +60,7 @@ function CatalogueDisplay(props: {
   const searchBarJsx = renderSearchBar(searchQueryState, changeSearchQuery);
 
   const filteredCatalogueJsx = renderFilteredCatalogue(
-    catalogueData,
+    catalogueData.data,
     catalogueError,
     catalogueState,
     catalogueFilterObject

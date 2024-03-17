@@ -7,6 +7,7 @@ function Catalogue() {
     catalogueData,
     catalogueError,
     catalogueState,
+    queryParamsState,
     searchQueryState,
     changeSearchQuery,
   } = CatalogueService();
