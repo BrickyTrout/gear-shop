@@ -7,8 +7,10 @@ function Catalogue() {
     catalogueData,
     catalogueError,
     catalogueState,
-    searchQueryState,
+    queryParamsState,
     changeSearchQuery,
+    changePageIndex,
+    changePageSize,
   } = CatalogueService();
   const { categoryData, categoryError, categoryState } =
     CatalogueCategoryService();
@@ -20,8 +22,10 @@ function Catalogue() {
       categoryData={categoryData}
       categoryError={categoryError}
       categoryState={categoryState}
-      searchQueryState={searchQueryState}
+      queryParamState={queryParamsState}
       changeSearchQuery={changeSearchQuery}
+      changePageIndex={changePageIndex}
+      changePageSize={changePageSize}
     ></CatalogueDisplay>
   );
 }

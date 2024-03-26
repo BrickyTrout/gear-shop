@@ -10,16 +10,22 @@ import CatalogueFilter from "../catalogue-filter";
 import React, { useEffect, useState } from "react";
 import { CatalogueFilterObject } from "../catalogue-filter/type-def";
 import CatalogueSearch from "../catalogue-search";
+import { CatalogueType } from "../catalogue/catalogue-api-type.def";
+import { CatalogueQueryParams } from "../catalogue/catalogue-query-params.def";
+import CataloguePagination from "../catalogue-pagination";
+import CatalogueToolbar from "../catalogue-toolbar";
 
 function CatalogueDisplay(props: {
-  catalogueData: CatalogueItemType[];
+  catalogueData: CatalogueType;
   catalogueError: string;
   catalogueState: ApiState;
   categoryData: string[];
   categoryError: string;
   categoryState: ApiState;
-  searchQueryState: string;
-  changeSearchQuery: (value: string) => void;
+  queryParamState: CatalogueQueryParams;
+  changeSearchQuery: (query: string) => void;
+  changePageIndex: (index: number) => void;
+  changePageSize: (size: number) => void;
 }) {
   const {
     catalogueData,
@@ -28,8 +34,10 @@ function CatalogueDisplay(props: {
     categoryData,
     categoryError,
     categoryState,
-    searchQueryState,
+    queryParamState,
     changeSearchQuery,
+    changePageIndex,
+    changePageSize,
   } = props;
 
   const [catalogueFilterObject, setCatalogueFilterObject] = useState({}) as [
@@ -37,8 +45,9 @@ function CatalogueDisplay(props: {
     React.Dispatch<React.SetStateAction<CatalogueFilterObject>>
   ];
   useEffect(() => {
+    const catalogueItemList = catalogueData.data;
     const filterObject = extractFilterObjectFromCatalogueItemsAndCategories(
-      catalogueData,
+      catalogueItemList,
       categoryData
     );
     setCatalogueFilterObject(filterObject);
@@ -55,10 +64,15 @@ function CatalogueDisplay(props: {
     });
   };
 
-  const searchBarJsx = renderSearchBar(searchQueryState, changeSearchQuery);
+  const searchBarJsx = renderToolbar(
+    queryParamState.search,
+    queryParamState.pageIndex,
+    changeSearchQuery,
+    changePageSize
+  );
 
   const filteredCatalogueJsx = renderFilteredCatalogue(
-    catalogueData,
+    catalogueData.data,
     catalogueError,
     catalogueState,
     catalogueFilterObject
@@ -71,6 +85,13 @@ function CatalogueDisplay(props: {
     onFilterClick
   );
 
+  const cataloguePaginationJsx = renderPagination(
+    queryParamState.pageSize,
+    queryParamState.pageIndex,
+    catalogueData.metadata.totalCount,
+    changePageIndex
+  );
+
   return (
     <div className="catalogue">
       {searchBarJsx}
@@ -78,6 +99,7 @@ function CatalogueDisplay(props: {
         {catalogueFilterJsx}
         {filteredCatalogueJsx}
       </div>
+      {cataloguePaginationJsx}
     </div>
   );
 }
@@ -137,15 +159,35 @@ function renderCatalogueFilter(
   return <div className="catalogue">Error: unknown state!</div>;
 }
 
-function renderSearchBar(
+function renderToolbar(
   searchQuery: string,
-  searchBarOnChange: (value: string) => void
+  pageSize: number,
+  searchBarOnChange: (value: string) => void,
+  pageSizeOnChange: (size: number)=> void
 ) {
   return (
-    <CatalogueSearch
+    <CatalogueToolbar
       searchQuery={searchQuery}
+      pageSize={pageSize}
       searchUpdated={searchBarOnChange}
-    ></CatalogueSearch>
+      pageSizeUpdated={pageSizeOnChange}
+    ></CatalogueToolbar>
+  );
+}
+
+function renderPagination(
+  pageSize: number,
+  pageIndex: number,
+  totalCount: number,
+  setPageIndex: (index: number) => void
+) {
+  return (
+    <CataloguePagination
+      pageSize={pageSize}
+      pageIndex={pageIndex}
+      totalCount={totalCount}
+      setPageIndex={setPageIndex}
+    ></CataloguePagination>
   );
 }
 

@@ -13,16 +13,31 @@ router.get("/", async function (req, res) {
   }
 
   let collection = conn.db("gear_store").collection("catalogue");
-  const query = req.query.q;
-  const regex = new RegExp(`${query}`, "i");
+  const { q, i, s } = req.query;
+  const regex = new RegExp(`${q}`, "i");
+  let page = parseInt(i, 10) || 1;
+  let pageSize = parseInt(s, 10) || 50;
+  const pipeline = [
+    {
+      $match: {
+        name: { $regex: regex },
+      },
+    },
+    {
+      $facet: {
+        metadata: [{ $count: "totalCount" }],
+        data: [{ $skip: (page - 1) * pageSize }, { $limit: pageSize }],
+      },
+    },
+  ];
   try {
-    let results = await collection.find({ name: regex }).limit(50).toArray();
-    // res.header("Access-Control-Allow-Origin", "*");
+    let results = await collection.aggregate(pipeline).toArray();
+    res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept"
     );
-    res.send(results).status(200);
+    res.send(results[0]).status(200);
   } catch (err) {
     res.status(500).send(err);
   }
