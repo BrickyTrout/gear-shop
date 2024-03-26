@@ -32,9 +32,17 @@ body,
       font-weight: 200;
     }
   }
-
+  &-header,
   &-body {
     margin: 0 20px;
+    max-width: $laptop;
+
+    @include respond-up($laptop) {
+      margin: 0 auto;
+      padding: 0 20px;
+      max-width: $desktop;
+      margin-bottom: 1rem;
+    }
   }
 }
 
@@ -42,3 +50,5 @@ body,
 @import "./catalogue-item/catalogue-item.scss";
 @import "./catalogue-filtered-display/catalogue-filtered-display.scss";
 @import "./catalogue-filter/catalogue-filter.scss";
+@import "./catalogue-pagination/catalogue-pagination.scss";
+@import "./catalogue-toolbar/catalogue-toolbar.scss";

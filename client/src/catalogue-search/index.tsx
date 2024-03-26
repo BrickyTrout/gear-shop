@@ -12,7 +12,12 @@ function CatalogueSearch(props: {
   };
 
   return (
-    <input type="text" value={searchQuery} onChange={onSearchBarChange}></input>
+    <input
+      className="catalogue-toolbar__search"
+      type="text"
+      value={searchQuery}
+      onChange={onSearchBarChange}
+    ></input>
   );
 }
 

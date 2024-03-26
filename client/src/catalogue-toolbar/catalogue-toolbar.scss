@@ -1,0 +1,13 @@
+.catalogue-toolbar {
+  display: flex;
+  gap: 0.5rem;
+
+  &__search {
+    padding: 0.25rem 0.5rem;
+    outline: none;
+    border-color: transparent;
+    border-radius: 4px;
+    height: 1.5rem;
+    flex: 1;
+  }
+}

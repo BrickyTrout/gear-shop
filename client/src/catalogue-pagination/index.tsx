@@ -9,14 +9,15 @@ const CataloguePagination = (props: {
   let paginationButtonJsx = [];
 
   for (let index = 1; index <= totalPages; index++) {
+    const stylingClass = `catalogue-pagination__page ${
+      pageIndex === index && "catalogue-pagination__page--selected"
+    }`;
     paginationButtonJsx.push(
       <button
-        className="catalogue-pagination__page"
+        className={stylingClass}
         onClick={() => setPageIndex(index)}
         key={index}
-      >
-        {index}
-      </button>
+      ></button>
     );
   }
   return <div className="catalogue-pagination">{paginationButtonJsx}</div>;
