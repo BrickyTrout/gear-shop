@@ -66,7 +66,7 @@ function CatalogueDisplay(props: {
 
   const searchBarJsx = renderToolbar(
     queryParamState.search,
-    queryParamState.pageIndex,
+    queryParamState.pageSize,
     changeSearchQuery,
     changePageSize
   );
@@ -88,7 +88,7 @@ function CatalogueDisplay(props: {
   const cataloguePaginationJsx = renderPagination(
     queryParamState.pageSize,
     queryParamState.pageIndex,
-    catalogueData.metadata.totalCount,
+    catalogueData.metadata?.totalCount,
     changePageIndex
   );
 
@@ -163,7 +163,7 @@ function renderToolbar(
   searchQuery: string,
   pageSize: number,
   searchBarOnChange: (value: string) => void,
-  pageSizeOnChange: (size: number)=> void
+  pageSizeOnChange: (size: number) => void
 ) {
   return (
     <CatalogueToolbar
@@ -178,7 +178,7 @@ function renderToolbar(
 function renderPagination(
   pageSize: number,
   pageIndex: number,
-  totalCount: number,
+  totalCount: number = 0,
   setPageIndex: (index: number) => void
 ) {
   return (
