@@ -8,7 +8,7 @@ router.get("/", async function (req, res) {
   try {
     conn = await client.connect();
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(JSON.stringify("error connecting"));
     return;
   }
 
@@ -17,7 +17,7 @@ router.get("/", async function (req, res) {
   const regex = new RegExp(`${query}`, "i");
   try {
     let results = await collection.find({ name: regex }).limit(50).toArray();
-    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept"
@@ -26,7 +26,7 @@ router.get("/", async function (req, res) {
   } catch (err) {
     res.status(500).send(err);
   }
-  client.close();
+  // client.close();
 });
 
 module.exports = router;

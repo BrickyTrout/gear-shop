@@ -10,6 +10,10 @@ const FetchService = () => {
     try {
       const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/${path}`, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
       });
       const data = await res.json();
       setGetData(data);

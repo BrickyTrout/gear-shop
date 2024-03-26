@@ -4,16 +4,17 @@ var router = express.Router();
 
 router.get("/", async function (req, res) {
   let conn;
+  let results;
   try {
     conn = await client.connect();
+    let collection = conn.db("gear_store").collection("catalogue_filters");
+    results = await collection.find({}).limit(50).toArray();
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(JSON.stringify(`error connecting ${err}`));
     return;
   }
 
-  let collection = conn.db("gear_store").collection("catalogue_filters");
   try {
-    let results = await collection.find({}).limit(50).toArray();
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
@@ -23,7 +24,7 @@ router.get("/", async function (req, res) {
   } catch (err) {
     res.status(500).send(err);
   }
-  client.close();
+  // client.close();
 });
 
 module.exports = router;
