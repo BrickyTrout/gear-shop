@@ -66,6 +66,7 @@ function CatalogueDisplay(props: {
   const searchBarJsx = renderToolbar(
     queryParamState.search,
     queryParamState.pageSize,
+    catalogueData.metadata?.totalCount,
     changeSearchQuery,
     changePageSize
   );
@@ -161,6 +162,7 @@ function renderCatalogueFilter(
 function renderToolbar(
   searchQuery: string,
   pageSize: number,
+  totalCount: number = 0,
   searchBarOnChange: (value: string) => void,
   pageSizeOnChange: (size: number) => void
 ) {
@@ -168,6 +170,7 @@ function renderToolbar(
     <CatalogueToolbar
       searchQuery={searchQuery}
       pageSize={pageSize}
+      totalCount={totalCount}
       searchUpdated={searchBarOnChange}
       pageSizeUpdated={pageSizeOnChange}
     ></CatalogueToolbar>

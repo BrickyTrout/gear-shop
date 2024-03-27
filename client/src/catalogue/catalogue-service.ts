@@ -32,7 +32,7 @@ const CatalogueService = () => {
   useEffect(() => {
     if (getData == null) return;
     setCatalogueState(ApiState.Loading);
-    if (getData?.metadata[0].totalCount <= 0) {
+    if (getData?.metadata[0]?.totalCount <= 0) {
       setCatalogueError("empty catalogue");
       setCatalogueState(ApiState.Error);
       console.error("empty catalogue");

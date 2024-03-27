@@ -10,4 +10,10 @@
     height: 1.5rem;
     flex: 1;
   }
+
+  &__page-size {
+    display: flex;
+    align-items: center;
+    color: $white;
+  }
 }

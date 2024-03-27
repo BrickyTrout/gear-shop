@@ -29,6 +29,22 @@ router.get("/", async function (req, res) {
         data: [{ $skip: (page - 1) * pageSize }, { $limit: pageSize }],
       },
     },
+    {
+      $project: {
+        metadata: [
+          {
+            totalCount: {
+              $ifNull: [
+                { $first: "$metadata.totalCount" },
+                0,
+                "$metadata.totalCount",
+              ],
+            },
+          },
+        ],
+        data: 1,
+      },
+    },
   ];
   try {
     let results = await collection.aggregate(pipeline).toArray();

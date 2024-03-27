@@ -4,10 +4,12 @@ import CatalogueSearch from "../catalogue-search";
 function CatalogueToolbar(props: {
   searchQuery: string;
   pageSize: number;
+  totalCount: number;
   searchUpdated: (value: string) => void;
   pageSizeUpdated: (size: number) => void;
 }) {
-  const { searchQuery, pageSize, searchUpdated, pageSizeUpdated } = props;
+  const { searchQuery, pageSize, totalCount, searchUpdated, pageSizeUpdated } =
+    props;
   const pageSizeOptions = [10, 20, 50];
   const pageSizeOptionsJsx = pageSizeOptions.map((pageSizeOption) => {
     return (
@@ -27,9 +29,15 @@ function CatalogueToolbar(props: {
         searchQuery={searchQuery}
         searchUpdated={searchUpdated}
       ></CatalogueSearch>
-      <select onChange={(event) => onPageSizeSelected(event)} value={pageSize}>
-        {pageSizeOptionsJsx}
-      </select>
+      <div className="catalogue-toolbar__page-size">
+        <select
+          onChange={(event) => onPageSizeSelected(event)}
+          value={pageSize}
+        >
+          {pageSizeOptionsJsx}
+        </select>{" "}
+        / {totalCount}
+      </div>
     </div>
   );
 }
