@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorPage from "./error";
 import Catalogue from "./catalogue";
+import Product, { loader as productLoader } from "./product";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,6 +16,11 @@ const router = createBrowserRouter([
       {
         path: "/catalogue",
         element: <Catalogue></Catalogue>,
+      },
+      {
+        path: "product/:id",
+        element: <Product></Product>,
+        loader: productLoader,
       },
     ],
   },

@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const catalogue = require("./routes/catalogue");
 const catalogueFilters = require("./routes/catalogue-filter");
+const product = require("./routes/product");
 const app = express();
 const corsOptions = {
   origin: "*",
@@ -14,6 +15,7 @@ app.use(cors(corsOptions)); // Use this after the variable declaration
 const port = 3001;
 app.use("/catalogue", catalogue);
 app.use("/catalogue-filters", catalogueFilters);
+app.use("/product", product);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import { CatalogueItemType } from "./type-def";
 
 function CatalogueItem(props: { data: CatalogueItemType }) {
-  const { name, price, img, manufacturer } = props.data;
+  const { name, price, img, manufacturer, _id } = props.data;
   return (
-    <div className="catalogue-item">
+    <Link className="catalogue-item" to={`/product/${_id}`}>
       <div className="catalogue-item__image-container">
         <img src={img}></img>
       </div>
@@ -12,7 +13,7 @@ function CatalogueItem(props: { data: CatalogueItemType }) {
         <span className="catalogue-item__name">{name}</span>
         <p className="catalogue-item__price">${price}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 

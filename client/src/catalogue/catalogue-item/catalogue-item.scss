@@ -23,12 +23,14 @@
   &__name {
     display: inline-flex;
     margin-right: 5px;
+    color: $black;
   }
   &__name {
     font-weight: 600;
   }
 
   &__price {
+    text-decoration: none;
     color: $shade-400;
     margin: 0.5rem 0 0;
   }
