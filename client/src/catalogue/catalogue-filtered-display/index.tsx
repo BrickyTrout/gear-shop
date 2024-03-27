@@ -1,7 +1,7 @@
-import CatalogueItem from "../catalogue-item";
-import { CatalogueItemType } from "../catalogue-item/type-def";
 import { filterCalogueItems } from "./catalogue-filtered-display-service";
 import { CatalogueFilterObject } from "../catalogue-filter/type-def";
+import { CatalogueItemType } from "../catalogue-item/type-def";
+import CatalogueItem from "../catalogue-item";
 
 function CatalogueFilteredDisplay(props: {
   unfilteredArray: CatalogueItemType[];

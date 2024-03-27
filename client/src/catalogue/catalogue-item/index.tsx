@@ -1,8 +1,7 @@
 import { CatalogueItemType } from "./type-def";
 
 function CatalogueItem(props: { data: CatalogueItemType }) {
-  const { _id, name, category, price, quantity, img, manufacturer } =
-    props.data;
+  const { name, price, img, manufacturer } = props.data;
   return (
     <div className="catalogue-item">
       <div className="catalogue-item__image-container">

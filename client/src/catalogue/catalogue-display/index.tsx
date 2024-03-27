@@ -1,6 +1,4 @@
-import { ApiState } from "../common/types/state.def";
 import CatalogueFilteredDisplay from "../catalogue-filtered-display";
-import { CatalogueItemType } from "../catalogue-item/type-def";
 import {
   convertCatalogueFilterObjectToArray,
   extractFilterObjectFromCatalogueItemsAndCategories,
@@ -9,9 +7,10 @@ import {
 import CatalogueFilter from "../catalogue-filter";
 import React, { useEffect, useState } from "react";
 import { CatalogueFilterObject } from "../catalogue-filter/type-def";
-import CatalogueSearch from "../catalogue-search";
-import { CatalogueType } from "../catalogue/catalogue-api-type.def";
-import { CatalogueQueryParams } from "../catalogue/catalogue-query-params.def";
+import { CatalogueType } from "../catalogue-api-type.def";
+import { ApiState } from "../../common/types/state.def";
+import { CatalogueQueryParams } from "../catalogue-query-params.def";
+import { CatalogueItemType } from "../catalogue-item/type-def";
 import CataloguePagination from "../catalogue-pagination";
 import CatalogueToolbar from "../catalogue-toolbar";
 

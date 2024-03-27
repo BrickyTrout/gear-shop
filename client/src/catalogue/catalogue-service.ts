@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import FetchService from "../common/hooks/fetch";
-import { CatalogueItemType } from "../catalogue-item/type-def";
+import { CatalogueItemType } from "./catalogue-item/type-def";
 import { ApiState } from "../common/types/state.def";
 import { CatalogueQueryParams } from "./catalogue-query-params.def";
 import {

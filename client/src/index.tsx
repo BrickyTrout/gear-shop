@@ -3,13 +3,31 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import ErrorPage from "./error";
+import Catalogue from "./catalogue";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "/catalogue",
+        element: <Catalogue></Catalogue>,
+      },
+    ],
+  },
+  {
+    errorElement: <ErrorPage></ErrorPage>,
+  },
+]);
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   // <React.StrictMode>
-  <App />
+  <RouterProvider router={router} />
   // </React.StrictMode>
 );
 

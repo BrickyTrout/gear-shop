@@ -4,8 +4,8 @@ import {
   CatalogueFilterObject,
 } from "../catalogue-filter/type-def";
 import { CatalogueItemType } from "../catalogue-item/type-def";
-import FetchService from "../common/hooks/fetch";
-import { ApiState } from "../common/types/state.def";
+import FetchService from "../../common/hooks/fetch";
+import { ApiState } from "../../common/types/state.def";
 
 export function extractFilterObjectFromCatalogueItemsAndCategories(
   items: CatalogueItemType[],

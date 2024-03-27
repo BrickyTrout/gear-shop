@@ -1,5 +1,5 @@
-import CatalogueDisplay from "../catalogue-display";
-import CatalogueCategoryService from "../catalogue-filtered-display/catalogue-filtered-display-service";
+import CatalogueDisplay from "./catalogue-display";
+import CatalogueCategoryService from "./catalogue-filtered-display/catalogue-filtered-display-service";
 import CatalogueService from "./catalogue-service";
 
 function Catalogue() {

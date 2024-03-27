@@ -2,6 +2,7 @@ import "./App.scss";
 import Catalogue from "./catalogue";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMountain } from "@fortawesome/free-solid-svg-icons";
+import { Outlet } from "react-router-dom";
 function App() {
   return (
     <div className="App">
@@ -11,7 +12,7 @@ function App() {
         <h3 className="title-light">haus</h3>
       </header>
       <div className="App-body">
-        <Catalogue></Catalogue>
+        <Outlet></Outlet>
       </div>
     </div>
   );

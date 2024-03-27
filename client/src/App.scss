@@ -46,9 +46,10 @@ body,
   }
 }
 
-@import "./catalogue-display/catalogue-display.scss";
-@import "./catalogue-item/catalogue-item.scss";
-@import "./catalogue-filtered-display/catalogue-filtered-display.scss";
-@import "./catalogue-filter/catalogue-filter.scss";
-@import "./catalogue-pagination/catalogue-pagination.scss";
-@import "./catalogue-toolbar/catalogue-toolbar.scss";
+@import "./catalogue/catalogue-display/catalogue-display.scss";
+@import "./catalogue/catalogue-item/catalogue-item.scss";
+@import "./catalogue/catalogue-filtered-display/catalogue-filtered-display.scss";
+@import "./catalogue/catalogue-filter/catalogue-filter.scss";
+@import "./catalogue/catalogue-pagination/catalogue-pagination.scss";
+@import "./catalogue/catalogue-toolbar/catalogue-toolbar.scss";
+@import "./error/styling.scss";
